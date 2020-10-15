@@ -77,6 +77,7 @@ nav {
 .task-box {
   width: 30vw;
   border: 1px solid black;
+  margin: 1rem;
 }
 
 .task-box div {

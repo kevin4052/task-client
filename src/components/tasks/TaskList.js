@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Loading from '../Loading';
+import { Link } from 'react-router-dom';
 
 export default class TaskList extends Component {
     constructor() {
@@ -11,13 +12,31 @@ export default class TaskList extends Component {
     }
 
     componentDidMount = () => {
-        axios.get(`${process.env.REACT_APP_API_DOMAIN}/task/all-tasks`)
+        this.getAllTasks();
+    }
+
+    getAllTasks = () => {
+        axios
+            .get(`${process.env.REACT_APP_API_DOMAIN}/task/all-tasks`, {
+                withCredentials: true
+            })
             .then(tasksFromAPI => {
                 this.setState({
                     listOfTask: tasksFromAPI.data
                 })
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log({ err }));
+    }
+
+    deletTask = () => {
+        axios
+            .delete(`${process.env.REACT_APP_API_DOMAIN}/task/delete`, {
+                withCredentials: true
+            })
+            .then(() => {
+                this.getAllTasks();
+            })
+            .catch(err => console.log({ err }));
     }
 
     displayTasks = () => {
@@ -33,6 +52,7 @@ export default class TaskList extends Component {
                     </div>
                     <div className="space-between">
                         <h6>{task.isCompleted ? "Task complete" : "Task not complete"}</h6>
+                        <Link to={`/update/${task._id}`} >Edit</Link>
                         <h6>Complete by: {task.completionDate}</h6>
                     </div>
                 </div>
