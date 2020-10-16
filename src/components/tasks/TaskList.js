@@ -28,9 +28,9 @@ export default class TaskList extends Component {
             .catch(err => console.log({ err }));
     }
 
-    deletTask = () => {
+    deleteTask = (taskId) => {
         axios
-            .delete(`${process.env.REACT_APP_API_DOMAIN}/task/delete`, {
+            .delete(`${process.env.REACT_APP_API_DOMAIN}/task/delete/${taskId}`, {
                 withCredentials: true
             })
             .then(() => {
@@ -42,17 +42,18 @@ export default class TaskList extends Component {
     displayTasks = () => {
         return this.state.listOfTask.map((task, i) => {
             return (
-                <div className="task-box center-content" key={i}>
+                <div className="task-box center-content general-padding" key={i}>
                     <div className="space-between">
-                        <h4>{task.title}</h4>
+                        <h4><Link to={`/details/${task._id}`} >{task.title}</Link></h4>
                         <h5>{task.author}</h5>
                     </div>
                     <div>
                         <p>{task.description}</p>
                     </div>
                     <div className="space-between">
-                        <h6>{task.isCompleted ? "Task complete" : "Task not complete"}</h6>
-                        <Link to={`/update/${task._id}`} >Edit</Link>
+                        <h6>{task.isComplete ? "Task complete" : "Task not complete"}</h6>
+                        <button><Link to={`/update/${task._id}`} >Edit</Link></button>
+                        <button onClick={() => this.deleteTask(task._id)}>Delete</button>
                         <h6>Complete by: {task.completionDate}</h6>
                     </div>
                 </div>
@@ -62,7 +63,7 @@ export default class TaskList extends Component {
 
     render() {
         return (
-            <div className="task-container">
+            <div className="task-container general-padding">
                 {this.state.listOfTask ? this.displayTasks() : <Loading />}
             </div>
         )

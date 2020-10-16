@@ -1,14 +1,23 @@
 body {
   margin: 0;
-  padding: 5vw 0 0;
+  padding: 7vw 0 0 0;
 }
 
-nav {
-  width: 98vw;
+button {
+  border-radius: 5px;
+  padding: 0.25rem 0.5rem;
+}
+
+.nav {
+  width: 96vw;
   padding: 0 5vw;
   height: 5vw;
   position: fixed;
   top: 0;
+}
+
+.nav a {
+  text-decoration: none;
 }
 
 .App {
@@ -65,19 +74,23 @@ nav {
 
 .task-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-flow: row wrap;
 }
 
 .general-padding {
-  padding: 0 5vw;
+  padding: 0 2rem;
+  margin: 1rem 0 0 0;
 }
 
 .task-box {
   width: 30vw;
   border: 1px solid black;
   margin: 1rem;
+  background-color: darkgray;
+  box-shadow: 4px 4px 14px 0px black;
+  border-radius: 10px;
 }
 
 .task-box div {
